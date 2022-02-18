@@ -10,12 +10,15 @@ public class PlayerInputDispatcher : MonoBehaviour
 
     [SerializeField] EntityMovement _movement;
     [SerializeField] EntityFire _fire;
+    [SerializeField] EntityShield _shield;
 
     [SerializeField] InputActionReference _pointerPosition;
     [SerializeField] InputActionReference _moveJoystick;
     [SerializeField] InputActionReference _fireButton;
+    [SerializeField] InputActionReference _shieldButton;
 
     Coroutine MovementTracking { get; set; }
+    Coroutine ShieldTracking { get; set; }
 
     Vector3 ScreenPositionToWorldPosition(Camera c, Vector2 cursorPosition) => _mainCamera.ScreenToWorldPoint(cursorPosition);
 
@@ -24,13 +27,20 @@ public class PlayerInputDispatcher : MonoBehaviour
         // binding
         _fireButton.action.started += FireInput;
 
+        _shieldButton.action.started += ShieldInput;
+        _shieldButton.action.canceled += ShieldInputCancel;
+
         _moveJoystick.action.started += MoveInput;
         _moveJoystick.action.canceled += MoveInputCancel;
     }
 
+
     private void OnDestroy()
     {
         _fireButton.action.started -= FireInput;
+
+        _shieldButton.action.started -= ShieldInput;
+        _shieldButton.action.canceled -= ShieldInputCancel;
 
         _moveJoystick.action.started -= MoveInput;
         _moveJoystick.action.canceled -= MoveInputCancel;
@@ -67,6 +77,30 @@ public class PlayerInputDispatcher : MonoBehaviour
         {
             _fire.FireBullet(2);
         }
+    }
+
+    private void ShieldInput(InputAction.CallbackContext obj)
+    {
+        if (ShieldTracking != null) return;
+
+        ShieldTracking = StartCoroutine(ShieldTrackingCoroutine());
+        IEnumerator ShieldTrackingCoroutine()
+        {
+            while (true)
+            {
+                _shield.ShieldUp();
+                yield return null;
+            }
+            yield break;
+        }
+    }
+
+    private void ShieldInputCancel(InputAction.CallbackContext obj)
+    {
+        if (ShieldTracking == null) return;
+        _shield.ShieldDown();
+        StopCoroutine(ShieldTracking);
+        ShieldTracking = null;
     }
 
 }

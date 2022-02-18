@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DisplayHealth : MonoBehaviour
 {
     [SerializeField] PlayerEntity _player;
-    [SerializeField] TextMeshProUGUI _text;
-
-    void UpdateDisplayedHealth(int _) => _text.text = _player.Health.CurrentHealth.ToString();
+    //[SerializeField] TextMeshProUGUI _text;
+    [SerializeField] Slider _slider;
+ 
+    void UpdateDisplayedHealth(int _)
+    {
+        //_text.text = _player.Health.CurrentHealth.ToString();
+        _slider.value = (float)_player.Health.CurrentHealth / (float)_player.Health.MaxHealth;
+    }
+    
 
     private void Start()
     {

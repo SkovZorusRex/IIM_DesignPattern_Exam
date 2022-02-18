@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Shield",
+                    "type": "Button",
+                    "id": "5a0ca0bd-50ad-41c4-86b5-3f4e5b7889bf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -110,6 +119,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "32e7aa07-9726-4732-8286-a5c8685c57c7",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseControl",
+                    "action": "Shield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -10,7 +10,10 @@ public class Health : MonoBehaviour, IHealth
     // Champs
     [SerializeField] int _startHealth;
     [SerializeField] int _maxHealth;
+    [SerializeField] bool canTakeDamage = true;
     [SerializeField] UnityEvent _onDeath;
+    [SerializeField] ControlShakeReference _shakeReference;
+  
 
     // Propriétés
     public int CurrentHealth { get; private set; }
@@ -28,23 +31,43 @@ public class Health : MonoBehaviour, IHealth
     void Init()
     {
         CurrentHealth = _startHealth;
+        canTakeDamage = true;
         OnSpawn?.Invoke();
     }
 
-    public void TakeDamage(int amount)
+    public void Heal(int amount)
     {
         if (amount < 0) throw new ArgumentException($"Argument amount {nameof(amount)} is negativ");
 
         var tmp = CurrentHealth;
-        CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
-        var delta = CurrentHealth - tmp;
-        OnDamage?.Invoke(delta);
+        CurrentHealth = Mathf.Min(CurrentHealth + amount, MaxHealth);
+        var delta = CurrentHealth + tmp;
+        //OnHeal?.Invoke(delta);
+    }
+    public void TakeDamage(int amount)
+    {
+        if (amount < 0) throw new ArgumentException($"Argument amount {nameof(amount)} is negativ");
 
-        if(CurrentHealth <= 0)
+
+        if (canTakeDamage)
         {
-            _onDeath?.Invoke();
+            var tmp = CurrentHealth;
+            CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
+            var delta = CurrentHealth - tmp;
+            OnDamage?.Invoke(delta);
+            _shakeReference?.Instance.LaunchScreenShake();
+
+            if (CurrentHealth <= 0)
+            {
+                _onDeath?.Invoke();
+            } 
         }
 
+    }
+
+    public void CanTakeDamage(bool state)
+    {
+        canTakeDamage = state;
     }
 
     [Button("test")]

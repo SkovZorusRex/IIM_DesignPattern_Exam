@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] Rigidbody2D _rb;
     [SerializeField] float _speed;
     [SerializeField] float _collisionCooldown = 0.5f;
+    [SerializeField] UnityEvent _OnHit;
 
     public Vector3 Direction { get; private set; }
     public int Power { get; private set; }
@@ -36,15 +37,19 @@ public class Bullet : MonoBehaviour
     {
         if (Time.fixedTime < LaunchTime + _collisionCooldown) return;
 
+        collision.GetComponent<ITouchable>()?.Touch(Power);
         collision.GetComponent<IHealth>()?.TakeDamage(Power);
-        Destroy(gameObject);
+        _OnHit.Invoke();
+        gameObject.SetActive(false);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (Time.fixedTime < LaunchTime + _collisionCooldown) return;
 
+        collision.collider.GetComponent<ITouchable>()?.Touch(Power);
         collision.collider.GetComponent<IHealth>()?.TakeDamage(Power);
-        Destroy(gameObject);
+        _OnHit.Invoke();
+        gameObject.SetActive(false);
     }
 
     private void Health_OnDamage(int arg0)

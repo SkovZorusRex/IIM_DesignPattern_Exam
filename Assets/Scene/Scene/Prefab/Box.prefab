@@ -172,6 +172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1877c82ee7293904fbdc533c958b3762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _loot: {fileID: 0}
+  _spawnChance: 0.33
 --- !u!61 &3562105877424766730
 BoxCollider2D:
   m_ObjectHideFlags: 0
