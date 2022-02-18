@@ -10,9 +10,9 @@ public class Health : MonoBehaviour, IHealth
     // Champs
     [SerializeField] int _startHealth;
     [SerializeField] int _maxHealth;
-    [SerializeField] bool canTakeDamage = true;
+    [SerializeField] bool canTakeDamage = true; //Sert au shield
     [SerializeField] UnityEvent _onDeath;
-    [SerializeField] ControlShakeReference _shakeReference;
+    [SerializeField] ControlShakeReference _shakeReference; //Permet le cameraShake
   
 
     // Propriétés
@@ -35,6 +35,7 @@ public class Health : MonoBehaviour, IHealth
         OnSpawn?.Invoke();
     }
 
+    //Ajoute à la vie un certain montant
     public void Heal(int amount)
     {
         if (amount < 0) throw new ArgumentException($"Argument amount {nameof(amount)} is negativ");
@@ -55,6 +56,7 @@ public class Health : MonoBehaviour, IHealth
             CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
             var delta = CurrentHealth - tmp;
             OnDamage?.Invoke(delta);
+            //Lance le screenShake
             _shakeReference?.Instance.LaunchScreenShake();
 
             if (CurrentHealth <= 0)
@@ -65,6 +67,7 @@ public class Health : MonoBehaviour, IHealth
 
     }
 
+    //Active ou Désactive les dégats
     public void CanTakeDamage(bool state)
     {
         canTakeDamage = state;

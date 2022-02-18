@@ -8,7 +8,7 @@ public class PickUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var obj = collision.GetComponentInParent<IPickUp>();
+        var obj = collision.GetComponentInParent<IPickUp>(); //L'objet est-il un IPickUp
         if(obj != null)
         {
             obj.OnPickUp();

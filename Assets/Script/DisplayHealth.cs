@@ -13,7 +13,7 @@ public class DisplayHealth : MonoBehaviour
     void UpdateDisplayedHealth(int _)
     {
         //_text.text = _player.Health.CurrentHealth.ToString();
-        _slider.value = (float)_player.Health.CurrentHealth / (float)_player.Health.MaxHealth;
+        _slider.value = (float)_player.Health.CurrentHealth / (float)_player.Health.MaxHealth; //Conversion en float entre 0 et 1
     }
     
 

@@ -11,6 +11,7 @@ public class MyToggle : MonoBehaviour, ITouchable
 
     public bool IsActive { get; private set; }
 
+    //Appeler lors de dégats reçu
     public void Touch(int power)
     {
         IsActive = !IsActive;

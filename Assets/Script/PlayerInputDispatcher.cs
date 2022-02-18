@@ -10,7 +10,7 @@ public class PlayerInputDispatcher : MonoBehaviour
 
     [SerializeField] EntityMovement _movement;
     [SerializeField] EntityFire _fire;
-    [SerializeField] EntityShield _shield;
+    [SerializeField] EntityShield _shield; 
 
     [SerializeField] InputActionReference _pointerPosition;
     [SerializeField] InputActionReference _moveJoystick;
@@ -27,6 +27,7 @@ public class PlayerInputDispatcher : MonoBehaviour
         // binding
         _fireButton.action.started += FireInput;
 
+        //Check simulant le maintient de la touche
         _shieldButton.action.started += ShieldInput;
         _shieldButton.action.canceled += ShieldInputCancel;
 
@@ -39,6 +40,7 @@ public class PlayerInputDispatcher : MonoBehaviour
     {
         _fireButton.action.started -= FireInput;
 
+        //Remove des listeners
         _shieldButton.action.started -= ShieldInput;
         _shieldButton.action.canceled -= ShieldInputCancel;
 
@@ -79,6 +81,7 @@ public class PlayerInputDispatcher : MonoBehaviour
         }
     }
 
+    //Check en continue de l'input, désactive le shoot et les dégats
     private void ShieldInput(InputAction.CallbackContext obj)
     {
         if (ShieldTracking != null) return;
@@ -95,6 +98,7 @@ public class PlayerInputDispatcher : MonoBehaviour
         }
     }
 
+    //L'input est relaché, réactive le shoot et les dégats
     private void ShieldInputCancel(InputAction.CallbackContext obj)
     {
         if (ShieldTracking == null) return;

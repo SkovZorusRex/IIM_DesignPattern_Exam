@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class BulletPool : MonoBehaviour
 {
-    [SerializeField] List<GameObject> pooledObjects;
-    [SerializeField] GameObject objectToPool;
-    [SerializeField] int amountToPool;
+    [SerializeField] List<GameObject> pooledObjects; //List des objets pool
+    [SerializeField] GameObject objectToPool; //Objet à pool
+    [SerializeField] int amountToPool; //Nombre à pool
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +22,7 @@ public class BulletPool : MonoBehaviour
         }
     }
 
+    //Renvoie un objet disponible de la pool
     public GameObject GetPooledObject()
     {
         for (int i = 0; i < amountToPool; i++)
