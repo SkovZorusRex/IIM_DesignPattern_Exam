@@ -158,7 +158,7 @@ public class LinqChallenge
         IEnumerable<(int, int)> Act()
         {
             // Return la query linq ici
-            return (IEnumerable<(int, int)>)values.Select(i => new Tuple<int, int>(i, i * 2)); //Cast error
+            return values.Select(i => (i, i * 2));
         }
         var queryResult = Act().ToList();
 
